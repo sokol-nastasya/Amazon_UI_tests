@@ -1,9 +1,11 @@
 describe('Amazon home page', () => {
-  const baseUrl = 'https://www.amazon.com/';
+
+  beforeEach('open amazon url', () => {
+    cy.openAmazonPage();
+  }) 
 
   it('open Amazon page and search item', () => {
     const searchWord = 'apple';
-    cy.visit(baseUrl);
     cy.get('#nav-logo').click();
     cy.get('#twotabsearchtextbox').type(searchWord);
     cy.get('#nav-search-submit-button').click();
@@ -15,7 +17,6 @@ describe('Amazon home page', () => {
 
 
   it('check filters all', () => {
-    cy.visit(baseUrl);
     cy.get('#nav-logo').click();
     cy.get('#nav-search-bar-form > .nav-left > #nav-search-dropdown-card > .nav-search-scope > #searchDropdownBox')
       .select('search-alias=aps', { force: true });
@@ -26,7 +27,6 @@ describe('Amazon home page', () => {
 
 
   it('open navbar menu and check categories for Digital Content & Devices -> Amazon Music', () => {
-    cy.visit(baseUrl);
     cy.get('#nav-hamburger-menu').click();
     cy.get('#hmenu-content').should('be.visible');
     const expectedCategories = [
@@ -74,7 +74,6 @@ describe('Amazon home page', () => {
   });
 
   it('sign in', () => {
-    cy.visit(baseUrl);
     cy.get('.nav-line-1-container').click();
     cy.get('#ap_email').should('be.visible')
       .type('anastasiias798@gmail.com');
@@ -87,7 +86,6 @@ describe('Amazon home page', () => {
 
   it('add smth from search to cart', () => {
     const searchWord = 'shampoo';
-    cy.visit(baseUrl);
     cy.get('#nav-logo').click();
     cy.get('#twotabsearchtextbox').type(searchWord);
     cy.get('#nav-search-submit-button').click();
